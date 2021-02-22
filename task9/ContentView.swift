@@ -10,15 +10,15 @@ import SwiftUI
 struct ContentView: View {
 
     @State private var isShowModal = false
-    @State private var prefName = "未選択"
+    @State private var prefName: String?
 
     var body: some View {
         VStack {
             HStack {
                 Text("都道府県").font(.title3).padding()
-                Text(prefName).font(.title3).padding()
+                Text(prefName ?? "未選択").font(.title3).padding()
                 Button("入力") {
-                    self.isShowModal.toggle()
+                    isShowModal.toggle()
 
                 }.sheet(isPresented: $isShowModal
                 ) {
@@ -32,27 +32,27 @@ struct ContentView: View {
 
 struct PrefecturesView: View {
 
-    @State private var PrefData =
+    @State private var prefectureNames =
         ["東京都", "神奈川県", "埼玉県", "千葉県"]
 
     @Binding var isShowModal: Bool
-    @Binding var selectPref: String
+    @Binding var selectPref: String?
 
     var body: some View {
         VStack {
             HStack {
                 Button("Cancel") {
-                    self.isShowModal.toggle()
+                    isShowModal.toggle()
                 }
                 Spacer()
             }.padding()
 
             VStack {
                 List {
-                    ForEach(PrefData, id: \.self) { data in
-                        Button("\(data)") {
-                            self.selectPref = data
-                            self.isShowModal.toggle()
+                    ForEach(prefectureNames, id: \.self) { name in
+                        Button("\(name)") {
+                            selectPref = name
+                            isShowModal.toggle()
                         }
                     }
                 }
